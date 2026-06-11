@@ -1,0 +1,49 @@
+# Broadchurch project configuration
+# Auto-generated during tenant provisioning.
+
+# UI hosting substrate (ADR-020). `vercel` (legacy) routes deploys
+# through the Vercel project; `gcp` (BC 2.0) routes through
+# .github/workflows/deploy-ui.yml → Cloud Build → per-tenant GKE
+# cluster. See broadchurch/docs/BC_2_TENANT_UI_HOSTING_PHASE1.md.
+hosting: gcp
+
+gcp:
+  project: broadchurch
+  region: us-central1
+  staging_bucket: broadchurch-agent-staging
+  github_deploy_sa: github-deploy@broadchurch.iam.gserviceaccount.com
+
+tenant:
+  project_name: "test-project-terner"
+  display_name: "test project terner"
+  org_id: "org_DH5oaKzZ8YWnoPtw"
+  service_account: "tenant-dh5oakzz8ywnoptw@broadchurch.iam.gserviceaccount.com"
+
+gateway:
+  url: "https://broadchurch-portal-194773164895.us-central1.run.app"
+  qs_api_key: "a9b8786d21aa0864c5984224366b6a33770f39abf64800eac3caf368678c2d4b"
+
+query_server:
+  url: "https://query.pip.prod.g.lovelace.ai"
+  audience: ""
+
+auth:
+  client_id: "avPzpsfc6oiNXSUAQrx32ZhsWUK9fNj2"
+  audience: ""
+
+# Agent hosting substrate (ADR-021). `agent_engine` (legacy)
+# deploys agents to the shared Vertex Agent Engine; `gke` (BC 2.0)
+# routes through .github/workflows/deploy-agent.yml → Cloud Build →
+# the per-tenant GKE cluster's tenant-agent namespace, and the UI
+# calls the agent in-cluster (no Portal /authorize hop). See
+# broadchurch/docs/BC_2_TENANT_AGENT_HOSTING.md.
+agent:
+  hosting: gke
+
+agents: {}
+
+# Compute jobs (Cloud Run Jobs) registered with the Portal.
+jobs: {}
+
+# Cloud Workflows registered with the Portal.
+workflows: {}
